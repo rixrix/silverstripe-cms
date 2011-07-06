@@ -4,11 +4,11 @@
 (function($) {
 	$.entwine('ss', function($){
 		/**
-		 * Class: #Form_EditForm :input[name=ClassName]
+		 * Class: .cms-edit-form :input[name=ClassName]
 		 * Alert the user on change of page-type. This might have implications
 		 * on the available form fields etc.
 		 */
-		$('#Form_EditForm :input[name=ClassName]').entwine({
+		$('.cms-edit-form :input[name=ClassName]').entwine({
 			// Function: onchange
 			onchange: function() {
 				alert(ss.i18n._t('CMSMAIN.ALERTCLASSNAME'));
@@ -16,11 +16,11 @@
 		});
 
 		/**
-		* Class: #Form_EditForm input[name=URLSegment]
+		* Class: .cms-edit-form input[name=URLSegment]
 		* 
 		 * Input validation on the URLSegment field
 		 */
-		$('#Form_EditForm input[name=URLSegment]').entwine({
+		$('.cms-edit-form input[name=URLSegment]').entwine({
 			/**
 			 * Property: FilterRegex
 			 * Regex
@@ -88,17 +88,17 @@
 		});
 
 		/**
-		 * Class: #Form_EditForm input[name=Title]
+		 * Class: .cms-edit-form input[name=Title]
 		 * 
 		 * Input validation on the Title field
 		 */
-		$('#Form_EditForm input[name=Title]').entwine({
+		$('.cms-edit-form input[name=Title]').entwine({
 			// Constructor: onmatch
 			onmatch : function() {
 				var self = this;
 		
 				this.bind('change', function(e) {
-					self.updateURLSegment(jQuery('#Form_EditForm input[name=URLSegment]'));
+					self.updateURLSegment(jQuery('.cms-edit-form input[name=URLSegment]'));
 					// TODO We should really user-confirm these changes
 					self.parents('form').find('input[name=MetaTitle], input[name=MenuTitle]').val(self.val());
 				});
@@ -137,12 +137,12 @@
 		});
 	
 		/**
-		 * Class: #Form_EditForm .parentTypeSelector
+		 * Class: .cms-edit-form .parentTypeSelector
 		 * 
 		 * ParentID field combination - mostly toggling between
 		 * the two radiobuttons and setting the hidden "ParentID" field
 		 */
-		$('#Form_EditForm .parentTypeSelector').entwine({
+		$('.cms-edit-form .parentTypeSelector').entwine({
 			// Constructor: onmatch
 			onmatch : function() {
 				var self = this;
@@ -168,38 +168,39 @@
 		});
 
 		/**
-		 * Class: #Form_EditForm #CanViewType, #Form_EditForm #CanEditType
+		 * Class: .cms-edit-form #CanViewType, .cms-edit-form #CanEditType
 		 * 
 		 * Toggle display of group dropdown in "access" tab,
 		 * based on selection of radiobuttons.
 		 */
-		$('#Form_EditForm #CanViewType, #Form_EditForm #CanEditType').entwine({
+		$('.cms-edit-form #CanViewType, .cms-edit-form #CanEditType, .cms-edit-form #CanCreateTopLevelType').entwine({
 			// Constructor: onmatch
 			onmatch: function() {
 				// TODO Decouple
 				var dropdown;
 				if(this.attr('id') == 'CanViewType') dropdown = $('#ViewerGroups');
 				else if(this.attr('id') == 'CanEditType') dropdown = $('#EditorGroups');
+				else if(this.attr('id') == 'CanCreateTopLevelType') dropdown = $('#CreateTopLevelGroups');
 		
 				this.find('.optionset :input').bind('change', function(e) {
-					dropdown.toggle(e.target.value == 'OnlyTheseUsers');
+					dropdown[e.target.value == 'OnlyTheseUsers' ? 'show' : 'hide']();
 				});
 		
 				// initial state
 				var currentVal = this.find('input[name=' + this.attr('id') + ']:checked').val();
-				dropdown.toggle(currentVal == 'OnlyTheseUsers');
+				dropdown[currentVal == 'OnlyTheseUsers' ? 'show' : 'hide']();
 				
 				this._super();
 			}
 		});	
 
 		/**
-		 * Class: #Form_EditForm .Actions #Form_EditForm_action_email
+		 * Class: .cms-edit-form .Actions #Form_EditForm_action_email
 		 * 
 		 * Email containing the link to the archived version of the page.
 		 * Visible on readonly older versions of a specific page at the moment.
 		 */
-		$('#Form_EditForm .Actions #Form_EditForm_action_email').entwine({
+		$('.cms-edit-form .Actions #Form_EditForm_action_email').entwine({
 			/**
 			 * Function: onclick
 			 * 
@@ -220,12 +221,12 @@
 		});
 
 		/**
-		 * Class: #Form_EditForm .Actions #Form_EditForm_action_print
+		 * Class: .cms-edit-form .Actions #Form_EditForm_action_print
 		 * 
 		 * Open a printable representation of the form in a new window.
 		 * Used for readonly older versions of a specific page.
 		 */
-		$('#Form_EditForm .Actions #Form_EditForm_action_print').entwine({
+		$('.cms-edit-form .Actions #Form_EditForm_action_print').entwine({
 			/**
 			 * Function: onclick
 			 * 
@@ -245,11 +246,11 @@
 		});
 
 		/**
-		 * Class: #Form_EditForm .Actions #Form_EditForm_action_rollback
+		 * Class: .cms-edit-form .Actions #Form_EditForm_action_rollback
 		 * 
 		 * A "rollback" to a specific version needs user confirmation.
 		 */
-		$('#Form_EditForm .Actions #Form_EditForm_action_rollback').entwine({
+		$('.cms-edit-form .Actions #Form_EditForm_action_rollback').entwine({
 			
 			/**
 			 * Function: onclick

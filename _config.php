@@ -19,7 +19,6 @@ Director::addRules(1, array(
 // Register default side reports
 SS_Report::register("SideReport", "SideReport_EmptyPages");
 SS_Report::register("SideReport", "SideReport_RecentlyEdited");
-SS_Report::register("SideReport", "SideReport_ToDo");
 if (class_exists('SubsiteReportWrapper')) SS_Report::register('ReportAdmin', 'SubsiteReportWrapper("BrokenLinksReport")',-20);
 else SS_Report::register('ReportAdmin', 'BrokenLinksReport',-20);
 
@@ -29,4 +28,10 @@ else SS_Report::register('ReportAdmin', 'BrokenLinksReport',-20);
  */
 ShortcodeParser::get('default')->register('sitetree_link', array('SiteTree', 'link_shortcode_handler'));
 
-Object::add_extension('File', 'SiteTreeFileDecorator');
+Object::add_extension('File', 'SiteTreeFileExtension');
+
+// TODO Remove once we can configure CMSMenu through static, nested configuration files
+CMSMenu::remove_menu_item('CMSPageEditController');
+CMSMenu::remove_menu_item('CMSPageSettingsController');
+CMSMenu::remove_menu_item('CMSPageHistoryController');
+CMSMenu::remove_menu_item('CMSPageReportsController');

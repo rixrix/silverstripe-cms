@@ -10,7 +10,7 @@
 		$('.AssetTableField.dragdrop').entwine({
 			onmatch: function() {
 				var self = this;
-				$('#sitetree li').each(function() {
+				$('.cms-tree li').each(function() {
 						$(this).droppable({
 							greedy: true,
 							hoverClass: 'over', // same hover effect as normal tree
@@ -63,7 +63,6 @@
 				
 				this.draggable({
 					zIndex: 4000,
-					//stack: {group: '.ui-layout-west'},
 					appendTo: 'body',
 					helper: function() {
 						return $(
